@@ -181,7 +181,7 @@ class BookingController extends GetxController {
     }
   }
 
-sendEmail(String hostlerEmail) async {
+sendEmail(String hostlerEmail,String hostelNme) async {
  
   final smtpServer = gmail('fyourhostel@gmail.com','ggsazjhrnosasczy'); 
   // Creating the Gmail server
@@ -196,7 +196,7 @@ sendEmail(String hostlerEmail) async {
 
 
     ..subject = 'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
-    ..text =         "Name: ${name.text}\nAge: ${age.text}\nPhone Number : ${phone.text}\nEmail: ${email.text}\nCNIC: ${cnic.text}\nCheck In: ${checkIn.text} |  Check Out: ${checkOut.text}\nRoom Type: ${roomTypes[_selectedRoomType.value]}";
+    ..text =         "Dear ${name.text} You Booked $hostelNme\nBooking Detail\nName: ${name.text}\nAge: ${age.text}\nPhone Number : ${phone.text}\nEmail: ${email.text}\nCNIC: ${cnic.text}\nCheck In: ${checkIn.text} |  Check Out: ${checkOut.text}\nRoom Type: ${roomTypes[_selectedRoomType.value]}";
 
   try {
     final sendReport = await send(message, smtpServer);
