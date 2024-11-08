@@ -120,9 +120,7 @@ class EditHostelController extends GetxController {
   RxBool _loading = false.obs;
   bool get loading => _loading.value;
   Future addHostel({required BuildContext context}) async {
-    if (_pickedImages.isEmpty) {
-      toast(msg: 'Please pick images first.', context: context);
-    } else if (hostelname.text.isEmpty) {
+     if (hostelname.text.isEmpty) {
       toast(msg: 'Please enter your hostel name.', context: context);
     } else if (hostelAddress.text.isEmpty) {
       toast(msg: 'Please enter your hostel map address.', context: context);
@@ -145,9 +143,7 @@ class EditHostelController extends GetxController {
       toast(msg: 'Please enter your hostel email.', context: context);
     } else if (phone.text.isEmpty) {
       toast(msg: 'Please enter your hostel phone number.', context: context);
-    } else if (_qrCode == '') {
-      toast(msg: 'Please enter your Payment QR CODE.', context: context);
-    } else {
+    }  else {
       _loading.value = true;
       bool isSuccess = await repo.updateHostel(
           context: context,
