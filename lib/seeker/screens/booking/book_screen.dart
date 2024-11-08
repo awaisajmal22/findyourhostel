@@ -163,7 +163,7 @@ class BookScreen extends StatelessWidget {
                       } else {
                         controller.bookingHostel(
                             model: model, context: context);
-                        controller.sendEmail(model.email!,);
+                        controller.sendEmail(model.email!,model.name!);
                       }
                     },
                     title: 'Continue with payment')
