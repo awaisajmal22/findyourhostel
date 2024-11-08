@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "391757040983",
+    "project_id": "hostel-app-y9o0ao",
+    "storage_bucket": "hostel-app-y9o0ao.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391757040983:android:95d7d5f0cd3f8068aa8212",
+        "android_client_info": {
+          "package_name": "com.mycompany.hostelapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391757040983-3igkron9s81mdj21ni24jcsvsht0724a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFx6H-5hXG_xqg8l84KnHN9jZNJJ7wxh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391757040983-3igkron9s81mdj21ni24jcsvsht0724a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "391757040983-5l816br87apnte5as1pbag486uvkv1tm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.hostelapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391757040983:android:8774c3085278fa27aa8212",
+        "android_client_info": {
+          "package_name": "com.vconet.findyourhostel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391757040983-3igkron9s81mdj21ni24jcsvsht0724a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFx6H-5hXG_xqg8l84KnHN9jZNJJ7wxh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391757040983-3igkron9s81mdj21ni24jcsvsht0724a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "391757040983-5l816br87apnte5as1pbag486uvkv1tm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.hostelapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
