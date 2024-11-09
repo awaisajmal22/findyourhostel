@@ -5,6 +5,7 @@ class PrefStorageRepo implements StorageRepo{
   static const _email ='_email';
   static const _password = '_password';
   static const _uid = '_uid';
+  static const _gender ='_gender';
   @override
   Future<String> getEmail() async{
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -47,5 +48,19 @@ return password;
                   SharedPreferences pref = await SharedPreferences.getInstance();
                   pref.setString(_email, '');
                   pref.setString(_password, '');
+                  pref.setInt(_gender, -1);
+  }
+  
+  @override
+  Future setGender(int gender)async {
+     SharedPreferences pref = await SharedPreferences.getInstance();
+              pref.setInt(_gender, gender);
+  }
+  
+  @override
+  Future<int> getGender()async {
+     SharedPreferences pref = await SharedPreferences.getInstance();
+     int gender = pref.getInt(_gender) ?? -1;
+     return gender;
   }
 }

@@ -26,6 +26,7 @@ if(email != '' && password != ''){
     
   
     if(user.role == 0){
+        _storage.setGender(user.gender?? -1);
       Get.offAllNamed(AppRoutes.seekerdashboard);
     }else{
       Get.offAllNamed(AppRoutes.recruiterdashboard);

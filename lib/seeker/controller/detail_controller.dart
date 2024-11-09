@@ -94,10 +94,16 @@ class DetailController extends GetxController {
   }
 
   late StorageRepo _storageRepo;
+  RxInt _gender = (-1).obs;
+int get gender => _gender.value;
+getGender() async {
+  _gender.value = await _storageRepo.getGender();
+}
   @override
   void onInit() {
     _storageRepo = getIt();
     getBookings();
+    getGender();
     getUserDataFromFirestore();
     // TODO: implement onInit
     super.onInit();

@@ -30,6 +30,7 @@ class LoginController extends GetxController {
       _storage.setUid(user.uid ?? '');
       _loading.value = false;
       if (user.role == 0) {
+        _storage.setGender(user.gender?? -1);
         Get.offAllNamed(AppRoutes.seekerdashboard);
       } else {
         Get.offAllNamed(AppRoutes.recruiterdashboard);

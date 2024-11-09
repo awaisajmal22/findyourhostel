@@ -72,7 +72,9 @@ class BookingController extends GetxController {
     DateTime? date = await showDatePicker(
         context: context,
         firstDate: DateTime.now(),
-        lastDate: DateTime.now().add(const Duration(days: 360)));
+        lastDate: isCheckin
+            ? DateTime.now().add(const Duration(days: 30))
+            : DateTime.now().add(const Duration(days: 360)));
     if (date != null) {
       if (isCheckin) {
         checkIn.text = DateFormat('dd-MM-yyyy').format(date);
@@ -121,7 +123,6 @@ class BookingController extends GetxController {
     });
   }
 
-  
   late StorageRepo _storageRepo;
   @override
   void onInit() {
@@ -181,31 +182,33 @@ class BookingController extends GetxController {
     }
   }
 
-sendEmail(String hostlerEmail,String hostelNme) async {
- 
-  final smtpServer = gmail('fyourhostel@gmail.com','ggsazjhrnosasczy'); 
-  // Creating the Gmail server
+  sendEmail(String hostlerEmail, String hostelNme) async {
+    final smtpServer = gmail('fyourhostel@gmail.com', 'ggsazjhrnosasczy');
+    // Creating the Gmail server
 
-  // Create our email message.
-  final message = Message()
-    ..from = Address('fyourhostel@gmail.com')
-    ..recipients.addAll([
-      email.text,
-      hostlerEmail,
-    ]) 
+    // Create our email message.
+    final message = Message()
+      ..from = Address('fyourhostel@gmail.com')
+      ..recipients.addAll([
+        email.text,
+        hostlerEmail,
+      ])
+      ..subject =
+          'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
+      ..text =
+          "Dear ${name.text} You Booked $hostelNme\nBooking Detail\nName: ${name.text}\nAge: ${age.text}\nPhone Number : ${phone.text}\nEmail: ${email.text}\nCNIC: ${cnic.text}\nCheck In: ${checkIn.text} |  Check Out: ${checkOut.text}\nRoom Type: ${roomTypes[_selectedRoomType.value]}";
 
-
-    ..subject = 'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
-    ..text =         "Dear ${name.text} You Booked $hostelNme\nBooking Detail\nName: ${name.text}\nAge: ${age.text}\nPhone Number : ${phone.text}\nEmail: ${email.text}\nCNIC: ${cnic.text}\nCheck In: ${checkIn.text} |  Check Out: ${checkOut.text}\nRoom Type: ${roomTypes[_selectedRoomType.value]}";
-
-  try {
-    final sendReport = await send(message, smtpServer);
-    print('Message sent: ' + sendReport.toString()); //print if the email is sent
-  } on MailerException catch (e) {
-    print('Message not sent. \n'+ e.toString()); //print if the email is not sent
-    // e.toString() will show why the email is not sending
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' +
+          sendReport.toString()); //print if the email is sent
+    } on MailerException catch (e) {
+      print('Message not sent. \n' +
+          e.toString()); //print if the email is not sent
+      // e.toString() will show why the email is not sending
+    }
   }
-} 
+
   Future<void> deleteBooking(String targetDate) async {
     try {
       // Format the date as per your Firestore structure (assuming `date` is stored as a Timestamp)

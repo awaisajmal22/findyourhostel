@@ -10,6 +10,7 @@ import 'package:findyourhostel/utils/loading_indicator.dart';
 import 'package:findyourhostel/utils/text_button.dart';
 import 'package:findyourhostel/utils/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -122,11 +123,10 @@ class ProfileScreen extends StatelessWidget {
                   controller: controller.phone,
                   hintText: 'Phone Number'),
               context.heightBox(0.02),
-              textField(
-                  onTap: () {
-                    controller.pickDateOfBirth(context: context);
-                  },
-                  readOnly: true,
+              formatterField(
+                  formatter: [
+                    LengthLimitingTextInputFormatter(2),
+                  ],
                   context: context,
                   controller: controller.dob,
                   hintText: 'Date of birth'),
@@ -136,9 +136,11 @@ class ProfileScreen extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: GestureDetector(
-                      onTap: () {
-                        controller.selectGender(index);
-                      },
+                      onTap: isUserSide == false
+                          ? () {}
+                          : () {
+                              controller.selectGender(index);
+                            },
                       child: Row(
                         children: [
                           Container(

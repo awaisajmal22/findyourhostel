@@ -1,18 +1,17 @@
 import 'package:findyourhostel/bindings/app_routes.dart';
 import 'package:findyourhostel/common/controller/profile_conroller.dart';
 import 'package:findyourhostel/constant/app_colors.dart';
-import 'package:findyourhostel/constant/asset_paths.dart';
+
 import 'package:findyourhostel/extensions/height_width_extension.dart';
 import 'package:findyourhostel/extensions/size_extension.dart';
 import 'package:findyourhostel/models/hostel_add_model/hostel_add_model.dart';
-import 'package:findyourhostel/models/hostel_model/hostel_model.dart';
-import 'package:findyourhostel/models/user_model/user_model.dart';
+
 import 'package:findyourhostel/seeker/controller/home_controller.dart';
-import 'package:findyourhostel/seeker/controller/seeker_dashboard_controller.dart';
+
 import 'package:findyourhostel/seeker/screens/home/component/filter_bottom_bar.dart';
 
 import 'package:findyourhostel/seeker/screens/home/component/hostel_tile.dart';
-import 'package:findyourhostel/seeker/screens/home/component/nearby_widget.dart';
+
 import 'package:findyourhostel/utils/app_text.dart';
 import 'package:findyourhostel/utils/curom_app_bar.dart';
 import 'package:findyourhostel/utils/text_field.dart';

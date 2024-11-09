@@ -480,13 +480,22 @@ class DetailScreen extends StatelessWidget {
                           child: appText(
                               context: context,
                               title: "No Room Avaliable\nPlease Come Later"))
-                    else
+                    else if (controller.gender == model.gender)
                       textButton(
                           context: context,
                           onTap: () {
                             Get.toNamed(AppRoutes.booking, arguments: model);
                           },
-                          title: 'BOOK'),
+                          title: 'BOOK')
+                    else
+                      Center(
+                          child: appText(
+                              textColor: Colors.red,
+                              context: context,
+                              fontSize: 12,
+                              textAlign: TextAlign.center,
+                              title:
+                                  "Kindly Sign In with your ${controller.gender == 0 ? 'Female' : 'Male'} Account\nFor Booking")),
                     context.heightBox(0.05)
                   ],
                 ),

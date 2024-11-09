@@ -6,6 +6,7 @@ import 'package:findyourhostel/extensions/font_size_extension.dart';
 import 'package:findyourhostel/extensions/height_width_extension.dart';
 import 'package:findyourhostel/extensions/size_extension.dart';
 import 'package:findyourhostel/extensions/validation_extension.dart';
+import 'package:findyourhostel/utils/app_text.dart';
 import 'package:findyourhostel/utils/expanded_tile.dart';
 import 'package:findyourhostel/utils/loading_indicator.dart';
 import 'package:findyourhostel/utils/text_button.dart';
@@ -100,6 +101,43 @@ class SignupScreen extends StatelessWidget {
                       controller.role.text = val;
                       controller.toggleShowRole();
                     }),
+                  context.heightBox(0.02),
+                    Row(
+                  children: List.generate(controller.gender.length, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                          controller.selectGender(index);
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: AppColor.black),
+                                  shape: BoxShape.circle),
+                              padding: const EdgeInsets.all(4),
+                              child: Container(
+                                height: 15,
+                                width: 15,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: controller.selectedGender == index
+                                        ? AppColor.black
+                                        : AppColor.offWhite),
+                              ),
+                            ),
+                            context.widthBox(0.01),
+                            appText(
+                                context: context,
+                                title: controller.gender[index],
+                                fontSize: 15),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
               context.heightBox(0.05),
               if (controller.loading)
                 loading()

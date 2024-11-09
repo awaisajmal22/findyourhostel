@@ -5,12 +5,16 @@ import 'package:findyourhostel/extensions/validation_extension.dart';
 import 'package:findyourhostel/models/hostel_add_model/hostel_add_model.dart';
 import 'package:findyourhostel/seeker/controller/booking_controller.dart';
 import 'package:findyourhostel/utils/app_text.dart';
+import 'package:findyourhostel/utils/cnic_formatter.dart';
 import 'package:findyourhostel/utils/expanded_tile.dart';
+import 'package:findyourhostel/utils/formatter/name_formatter.dart';
+import 'package:findyourhostel/utils/formatter/phone_formatter.dart';
 import 'package:findyourhostel/utils/loading_indicator.dart';
 import 'package:findyourhostel/utils/text_button.dart';
 import 'package:findyourhostel/utils/text_field.dart';
 import 'package:findyourhostel/utils/toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class BookScreen extends StatelessWidget {
@@ -36,8 +40,10 @@ class BookScreen extends StatelessWidget {
                 width: 200,
               ),
               context.heightBox(0.05),
-              textField(
+              formatterField(
+                  formatter: [NonNumericInputFormatter()],
                   context: context,
+                  textInputType: TextInputType.name,
                   controller: controller.name,
                   hintText: 'Name'),
               context.heightBox(0.02),
@@ -46,22 +52,28 @@ class BookScreen extends StatelessWidget {
                   controller: controller.email,
                   hintText: 'Email'),
               context.heightBox(0.02),
-              textField(
+              formatterField(
+                  formatter: [PhoneInputFormatter()],
                   context: context,
                   textInputType: TextInputType.number,
                   controller: controller.phone,
                   hintText: 'Phone'),
               context.heightBox(0.02),
-              textField(
-                  readOnly: true,
-                  onTap: () {
-                    controller.pickAge(context: context);
-                  },
+              formatterField(
+                  formatter: [
+                    LengthLimitingTextInputFormatter(2),
+                  ],
+                  // readOnly: true,
+                  // onTap: () {
+                  //   controller.pickAge(context: context);
+                  // },
                   context: context,
                   controller: controller.age,
+                  textInputType: TextInputType.number,
                   hintText: 'Age'),
               context.heightBox(0.02),
-              textField(
+              formatterField(
+                  formatter: [CnicFormatter()],
                   context: context,
                   controller: controller.cnic,
                   textInputType: TextInputType.number,
@@ -121,7 +133,6 @@ class BookScreen extends StatelessWidget {
                 textButton(
                     context: context,
                     onTap: () {
-                      JazzCashClass().openJazzCashPayment('5000', 'Ok');
                       List<String> checkOut =
                           controller.checkOut.text.split('-');
                       List<String> checkInt =
@@ -161,9 +172,10 @@ class BookScreen extends StatelessWidget {
                       } else if (controller.selectedRoomType == -1) {
                         toast(msg: 'Please select room type', context: context);
                       } else {
+                        JazzCashClass().openJazzCashPayment('5000', 'Ok');
                         controller.bookingHostel(
                             model: model, context: context);
-                        controller.sendEmail(model.email!,model.name!);
+                        controller.sendEmail(model.email!, model.name!);
                       }
                     },
                     title: 'Continue with payment')

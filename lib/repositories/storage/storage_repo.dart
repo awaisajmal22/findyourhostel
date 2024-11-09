@@ -6,4 +6,6 @@ abstract class StorageRepo{
   Future clearSession();
   Future<String> getUid();
   Future setUid(String uid);
+  Future setGender(int gender);
+  Future<int> getGender();
 }

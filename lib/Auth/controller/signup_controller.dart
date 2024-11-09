@@ -39,6 +39,7 @@ class SignupController extends GetxController {
   Future signup({required BuildContext context,}) async {
     _loading.value = true;
     bool isSuccess = await _repo.signup(
+      gender: _selectedGender.value,
         context: context,
         email: email.text,
         password: password.text,
@@ -57,5 +58,15 @@ class SignupController extends GetxController {
   void onInit() {
     _repo = getIt();
     super.onInit();
+  }
+  RxList<String> _gender = <String>[
+    'Male',
+    'Female',
+  ].obs;
+  List<String> get gender => _gender.value;
+  RxInt _selectedGender = 0.obs;
+  int get selectedGender => _selectedGender.value;
+  selectGender(int index) {
+    _selectedGender.value = index;
   }
 }
