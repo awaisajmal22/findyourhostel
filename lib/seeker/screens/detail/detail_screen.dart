@@ -379,25 +379,25 @@ class DetailScreen extends StatelessWidget {
                         context: context,
                         title: model.policies!,
                         fontSize: 15),
-                    // context.heightBox(0.02),
-                    // Container(
-                    //   height: context.getSize.height * 0.3,
-                    //   width: context.getSize.width,
-                    //   decoration: BoxDecoration(
-                    //       boxShadow: [boxShadow(context: context)],
-                    //       borderRadius: BorderRadius.circular(20),
-                    //       image: model.qrCode == null || model.qrCode == ''
-                    //           ? null
-                    //           : DecorationImage(
-                    //               image: NetworkImage(model.qrCode!)),
-                    //       color: AppColor.offWhite),
-                    //   child: model.qrCode == null || model.qrCode == ''
-                    //       ? Center(
-                    //           child: appText(
-                    //               context: context, title: 'Payment QR CODE'),
-                    //         )
-                    //       : null,
-                    // ),
+                    context.heightBox(0.02),
+                    Container(
+                      height: context.getSize.height * 0.3,
+                      width: context.getSize.width,
+                      decoration: BoxDecoration(
+                          boxShadow: [boxShadow(context: context)],
+                          borderRadius: BorderRadius.circular(20),
+                          image: model.qrCode == null || model.qrCode == ''
+                              ? null
+                              : DecorationImage(
+                                  image: NetworkImage(model.qrCode!)),
+                          color: AppColor.offWhite),
+                      child: model.qrCode == null || model.qrCode == ''
+                          ? Center(
+                              child: appText(
+                                  context: context, title: 'Payment QR CODE'),
+                            )
+                          : null,
+                    ),
                     context.heightBox(0.02),
                     if (model.review != null || model.review!.isNotEmpty)
                       appText(
