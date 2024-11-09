@@ -188,21 +188,34 @@ class BookingController extends GetxController {
     // Creating the Gmail server
 
     // Create our email message.
-    final message = Message()
+    final message1 = Message()
       ..from = Address('fyourhostel@gmail.com')
-      ..recipients.addAll([
+      ..recipients.add(
         email.text,
-        hostlerEmail,
-      ])
+    
+      )
       ..subject =
           'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
-      ..text =
+      ..text = 
           "Dear ${name.text} You Booked $hostelNme\nBooking Detail\nName: ${name.text}\nAge: ${age.text}\nPhone Number : ${phone.text}\nEmail: ${email.text}\nCNIC: ${cnic.text}\nCheck In: ${checkIn.text} |  Check Out: ${checkOut.text}\nRoom Type: ${roomTypes[_selectedRoomType.value]}'}";
+    final message2 = Message()
+      ..from = Address('fyourhostel@gmail.com')
+      ..recipients.add(
+       hostlerEmail,
+    
+      )
+      ..subject =
+          'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
+      ..text = 
+          "Dear Recruiter ${name.text}  Booked Your Hostel: $hostelNme\nBooking Detail\nName: ${name.text}\nAge: ${age.text}\nPhone Number : ${phone.text}\nEmail: ${email.text}\nCNIC: ${cnic.text}\nCheck In: ${checkIn.text} |  Check Out: ${checkOut.text}\nRoom Type: ${roomTypes[_selectedRoomType.value]}'}";
 
     try {
-      final sendReport = await send(message, smtpServer);
+      final sendReport = await send(message1, smtpServer);
+      final sendReport2 = await send(message2, smtpServer);
       print('Message sent: ' +
           sendReport.toString()); //print if the email is sent
+      print('Message sent: ' +
+          sendReport2.toString()); //print if the email is sent
     } on MailerException catch (e) {
       print('Message not sent. \n' +
           e.toString()); //print if the email is not sent
