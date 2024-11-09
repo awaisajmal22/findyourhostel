@@ -123,7 +123,22 @@ class BookScreen extends StatelessWidget {
                     dataList: controller.newRoomTypeList,
                     onTap: (val, val2) {
                       controller.addRoomType(val, val2);
+                      print(controller.selectedRoomType);
                     }),
+              // if (controller.selectedRoomType == 0 ||
+              //     controller.selectedRoomType == -1)
+              //   SizedBox.shrink()
+              // else
+              //   context.heightBox(0.01),
+              // if (controller.selectedRoomType == 0 ||
+              //     controller.selectedRoomType == -1)
+              //   const SizedBox.shrink()
+              // else
+              //   textField(
+              //       textInputType: TextInputType.number,
+              //       context: context,
+              //       controller: controller.beds,
+              //       hintText: 'How Many Beds'),
               context.heightBox(0.02),
               if (controller.loading)
                 Center(

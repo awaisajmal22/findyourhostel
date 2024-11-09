@@ -26,6 +26,7 @@ class BookingController extends GetxController {
   TextEditingController checkIn = TextEditingController();
   TextEditingController checkOut = TextEditingController();
   TextEditingController roomType = TextEditingController();
+  TextEditingController beds = TextEditingController();
   List<String> roomTypes = [
     'Private Room',
     '2 Sharing',
@@ -196,7 +197,7 @@ class BookingController extends GetxController {
       ..subject =
           'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
       ..text =
-          "Dear ${name.text} You Booked $hostelNme\nBooking Detail\nName: ${name.text}\nAge: ${age.text}\nPhone Number : ${phone.text}\nEmail: ${email.text}\nCNIC: ${cnic.text}\nCheck In: ${checkIn.text} |  Check Out: ${checkOut.text}\nRoom Type: ${roomTypes[_selectedRoomType.value]}";
+          "Dear ${name.text} You Booked $hostelNme\nBooking Detail\nName: ${name.text}\nAge: ${age.text}\nPhone Number : ${phone.text}\nEmail: ${email.text}\nCNIC: ${cnic.text}\nCheck In: ${checkIn.text} |  Check Out: ${checkOut.text}\nRoom Type: ${roomTypes[_selectedRoomType.value]}'}";
 
     try {
       final sendReport = await send(message, smtpServer);
