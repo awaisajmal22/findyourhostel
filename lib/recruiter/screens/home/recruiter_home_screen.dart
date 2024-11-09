@@ -31,6 +31,7 @@ class RecruiterHomeScreen extends StatelessWidget {
         appBar: customAppBar(context, pfCont),
         body: Obx(
           () => ListView.builder(
+              shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
               itemCount: controller.hostelsList.length,
               itemBuilder: (context, index) {
@@ -47,104 +48,117 @@ class RecruiterHomeScreen extends StatelessWidget {
                       ]),
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            height: context.getSize.height * 0.15,
-                            width: context.getSize.width * 0.3,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(
-                                  image: NetworkImage(model.images![0]),
-                                  fit: BoxFit.cover),
+                      SizedBox(
+                        height: context.getSize.height * 0.25,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            PageView.builder(
+                                controller: controller.pageController,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: model.images!.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    height: context.getSize.height * 0.25,
+                                    width: context.getSize.width,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              model.images![index]),
+                                          fit: BoxFit.cover),
+                                    ),
+                                  );
+                                }),
+                            Positioned(
+                              right: 10,
+                              child: Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    color: AppColor.black.withOpacity(0.4),
+                                    shape: BoxShape.circle),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    controller.changeIndex();
+                                  },
+                                  child: Icon(
+                                    Icons.keyboard_arrow_right,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                             ),
-                            // child: Stack(
-                            //   children: [
-                            //     Positioned(
-                            //       bottom: 10,
-                            //       right: 10,
-                            //       child: Container(
-                            //         padding: const EdgeInsets.all(5),
-                            //         decoration: BoxDecoration(
-                            //             borderRadius: BorderRadius.circular(10),
-                            //             color: AppColor.black.withOpacity(0.5)),
-                            //         child: Row(
-                            //           mainAxisSize: MainAxisSize.min,
-                            //           children: [
-                            //             Icon(
-                            //               Icons.star,
-                            //               color: AppColor.offWhite,
-                            //               size: 15,
-                            //             ),
-                            //             context.widthBox(0.005),
-                            //             appText(
-                            //                 context: context,
-                            //                 title: '4.5',
-                            //                 fontSize: 11,
-                            //                 textColor: AppColor.offWhite)
-                            //           ],
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-                          ),
-                          context.widthBox(0.01),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                appText(
-                                    fontSize: 18,
+                            Positioned(
+                              left: 10,
+                              child: Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    color: AppColor.black.withOpacity(0.4),
+                                    shape: BoxShape.circle),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    controller.changeIndex(isLeft: true);
+                                  },
+                                  child: Icon(
+                                    Icons.keyboard_arrow_left,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      context.heightBox(0.02),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          appText(
+                              fontSize: 18,
+                              context: context,
+                              maxLine: 2,
+                              title: model.name!),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                color: Colors.red,
+                              ),
+                              context.widthBox(0.01),
+                              Container(
+                                width: context.getSize.width * 0.44,
+                                child: appText(
+                                    fontSize: 15,
                                     context: context,
                                     maxLine: 2,
-                                    title: model.name!),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.location_on,
-                                      color: Colors.red,
-                                    ),
-                                    context.widthBox(0.01),
-                                    Container(
-                                      width: context.getSize.width * 0.44,
-                                      child: appText(
-                                          fontSize: 15,
-                                          context: context,
-                                          maxLine: 2,
-                                          title: model.location!),
-                                    ),
-                                  ],
-                                ),
-                                Wrap(
-                                  spacing: 7,
-                                  runSpacing: 7,
-                                  children: List.generate(
-                                      model.roomType!.length, (index) {
-                                    final rooms = RoomType.fromJson(
-                                        model.roomType![index]);
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        appText(
-                                            textAlign: TextAlign.left,
-                                            fontSize: 15,
-                                            context: context,
-                                            title: controller
-                                                .roomTypes[rooms.type!]),
-                                        appText(
-                                            textAlign: TextAlign.left,
-                                            context: context,
-                                            title: 'Price: Rs ${rooms.price}',
-                                            fontSize: 15)
-                                      ],
-                                    );
-                                  }),
-                                )
-                              ],
-                            ),
+                                    title: model.location!),
+                              ),
+                            ],
+                          ),
+                          Wrap(
+                            spacing: 7,
+                            runSpacing: 7,
+                            children:
+                                List.generate(model.roomType!.length, (index) {
+                              final rooms =
+                                  RoomType.fromJson(model.roomType![index]);
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  appText(
+                                      textAlign: TextAlign.left,
+                                      fontSize: 15,
+                                      context: context,
+                                      title: controller.roomTypes[rooms.type!]),
+                                  appText(
+                                      textAlign: TextAlign.left,
+                                      context: context,
+                                      title: 'Price: Rs ${rooms.price}',
+                                      fontSize: 15)
+                                ],
+                              );
+                            }),
                           )
                         ],
                       ),
@@ -158,7 +172,8 @@ class RecruiterHomeScreen extends StatelessWidget {
                                 bgColor: Colors.green.shade100,
                                 context: context,
                                 onTap: () {
-                                  Get.toNamed(AppRoutes.editHostel,arguments: model);
+                                  Get.toNamed(AppRoutes.editHostel,
+                                      arguments: model);
                                 },
                                 title: 'Edit'),
                           ),

@@ -18,7 +18,7 @@ import 'package:get/get.dart';
 class EditHostelScreen extends StatelessWidget {
   EditHostelScreen({super.key});
   final controller = Get.find<EditHostelController>();
-  final model = Get.arguments;
+  HostelAddModel model = Get.arguments;
   @override
   Widget build(BuildContext context) {
     if(!controller.isDataAdded.value){
@@ -360,7 +360,7 @@ class EditHostelScreen extends StatelessWidget {
                       textButton(
                           context: context,
                           onTap: () {
-                            controller.addHostel(context: context);
+                            controller.updateHostel(context: context,oldImages: model.images!);
                           },
                           title: 'Update Hostel'),
                     context.heightBox(0.02),

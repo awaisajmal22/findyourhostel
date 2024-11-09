@@ -119,8 +119,10 @@ class EditHostelController extends GetxController {
 
   RxBool _loading = false.obs;
   bool get loading => _loading.value;
-  Future addHostel({required BuildContext context}) async {
-     if (hostelname.text.isEmpty) {
+  Future updateHostel(
+      {required BuildContext context, required List<String> oldImages}) async {
+    print("Old Images Length${oldImages.length}");
+    if (hostelname.text.isEmpty) {
       toast(msg: 'Please enter your hostel name.', context: context);
     } else if (hostelAddress.text.isEmpty) {
       toast(msg: 'Please enter your hostel map address.', context: context);
@@ -143,9 +145,10 @@ class EditHostelController extends GetxController {
       toast(msg: 'Please enter your hostel email.', context: context);
     } else if (phone.text.isEmpty) {
       toast(msg: 'Please enter your hostel phone number.', context: context);
-    }  else {
+    } else {
       _loading.value = true;
       bool isSuccess = await repo.updateHostel(
+        oldImages: oldImages,
           context: context,
           model: HostelAddModel(
             uuid: await storageRepo.getUid(),
@@ -166,17 +169,18 @@ class EditHostelController extends GetxController {
             avalaibleBed: avalBed.text,
             avalaibleRoom: avalRoom.text,
             email: email.text,
+
             description: description.text,
             createdDate: DateTime.timestamp().toString(),
           ));
       if (isSuccess == true) {
-        toast(msg: 'Hostel upload successfully.', context: context);
+      toast(msg: 'Hostel upload successfully.', context: context);
 
-        _loading.value = false;
-        Get.back();
+      _loading.value = false;
+      Get.back();
       } else {
-        toast(msg: 'Something went wrong.', context: context);
-        _loading.value = false;
+      toast(msg: 'Something went wrong.', context: context);
+      _loading.value = false;
       }
     }
   }

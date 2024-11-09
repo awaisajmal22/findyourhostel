@@ -41,7 +41,7 @@ Future<bool> addHostel({required BuildContext context, required HostelAddModel m
   return isSuccess;
 }
  @override
-Future<bool> updateHostel({required BuildContext context, required HostelAddModel model}) async {
+Future<bool> updateHostel({required List<String> oldImages,required BuildContext context, required HostelAddModel model}) async {
   bool isSuccess = false;
   FirebaseFirestore _firebase = FirebaseFirestore.instance;
 
@@ -49,9 +49,13 @@ Future<bool> updateHostel({required BuildContext context, required HostelAddMode
     // Upload images and get the URLs
     String qrCode = await _uploadImageAndGetUrl(model.qrCode);
     List<String> uploadedImageUrls = await _uploadImages(model.images ?? []);
-
+List<String> imagesData = [];
+imagesData.addAll(uploadedImageUrls);
+print('New Images ${imagesData.length}');
+imagesData.addAll(oldImages);
+print('New Images ${imagesData.length}');
     // Update the model with the uploaded image URLs
-    model = model.copyWith(images: uploadedImageUrls).copyWith(qrCode: qrCode);
+    model = model.copyWith(images: imagesData).copyWith(qrCode: qrCode);
 
     // Create a unique document reference for the new hostel
     DocumentReference hostelDoc = _firebase.collection('hostel').doc(model.docId);

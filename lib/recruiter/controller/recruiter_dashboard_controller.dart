@@ -106,5 +106,14 @@ List<String> roomTypes = [
   }
 }
 
+changeIndex({bool isLeft = false}){
+  if(isLeft){
+  pageController.previousPage(duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+  }else{
+  pageController.nextPage(duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+  }
+
+}
+PageController pageController = PageController();
   }
 
