@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:findyourhostel/main.dart';
 import 'package:findyourhostel/models/booking_model/booking_model.dart';
 import 'package:findyourhostel/models/hostel_add_model/hostel_add_model.dart';
+import 'package:findyourhostel/models/hostel_model/hostel_model.dart';
 import 'package:findyourhostel/repositories/storage/storage_repo.dart';
 import 'package:findyourhostel/utils/toast.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +18,7 @@ import 'package:jazzcash_flutter/jazzcash_flutter.dart';
 import 'package:mailer/mailer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class BookingController extends GetxController {
+class RecruiterBookingController extends GetxController {
   TextEditingController name = TextEditingController();
   TextEditingController age = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -156,8 +157,11 @@ class BookingController extends GetxController {
 
                 d.add(BookingModel.fromJson(data));
                 for (var x in d) {
-                  if (x.bookerId == await _storageRepo.getUid()) {
-                    _bookedHostel.add(x);
+                  final m = HostelAddModel.fromJson(x.hostel_model!);
+                  if (m.uuid == await _storageRepo.getUid()) {
+                    
+                      _bookedHostel.add(x);
+                    
                   }
                 }
               }
@@ -192,21 +196,19 @@ class BookingController extends GetxController {
       ..from = Address('fyourhostel@gmail.com')
       ..recipients.add(
         email.text,
-    
       )
       ..subject =
           'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
-      ..text = 
+      ..text =
           "Dear ${name.text} You Booked $hostelNme\nBooking Detail\nName: ${name.text}\nAge: ${age.text}\nPhone Number : ${phone.text}\nEmail: ${email.text}\nCNIC: ${cnic.text}\nCheck In: ${checkIn.text} |  Check Out: ${checkOut.text}\nRoom Type: ${roomTypes[_selectedRoomType.value]}";
     final message2 = Message()
       ..from = Address('fyourhostel@gmail.com')
       ..recipients.add(
-       hostlerEmail,
-    
+        hostlerEmail,
       )
       ..subject =
           'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
-      ..text = 
+      ..text =
           "Dear Recruiter ${name.text}  Booked Your Hostel: $hostelNme\nBooking Detail\nName: ${name.text}\nAge: ${age.text}\nPhone Number : ${phone.text}\nEmail: ${email.text}\nCNIC: ${cnic.text}\nCheck In: ${checkIn.text} |  Check Out: ${checkOut.text}\nRoom Type: ${roomTypes[_selectedRoomType.value]}";
 
     try {
@@ -223,7 +225,8 @@ class BookingController extends GetxController {
     }
   }
 
-  Future<void> deleteBooking(String targetDate,String hostelerId,String hostelName,String userName) async {
+  Future<void> deleteBooking(String targetDate, String hostelerId,
+      String hostelName, String userName) async {
     try {
       // Format the date as per your Firestore structure (assuming `date` is stored as a Timestamp)
       // Timestamp targetTimestamp = Timestamp.fromDate(DateTime.parse(targetDate));
@@ -236,21 +239,19 @@ class BookingController extends GetxController {
 
       // Loop through each matching document and delete it
       for (QueryDocumentSnapshot doc in querySnapshot.docs) {
-        await doc.reference.delete().whenComplete(()async{
-              final smtpServer = gmail('fyourhostel@gmail.com', 'ggsazjhrnosasczy');
+        await doc.reference.delete().whenComplete(() async {
+          final smtpServer = gmail('fyourhostel@gmail.com', 'ggsazjhrnosasczy');
           final message2 = Message()
-      ..from = Address('fyourhostel@gmail.com')
-      ..recipients.add(
-       hostelerId,
-    
-      )
-      ..subject =
-          'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
-      ..text = 
-          "Dear Recruiter ${userName}  Cancel Your Hostel: $hostelName Booking";
-      final sendReport2 = await send(message2, smtpServer);
+            ..from = Address('fyourhostel@gmail.com')
+            ..recipients.add(
+              hostelerId,
+            )
+            ..subject =
+                'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
+            ..text =
+                "Dear Recruiter ${userName}  Cancel Your Hostel: $hostelName Booking";
+          final sendReport2 = await send(message2, smtpServer);
         });
-        
       }
 
       print('Booking(s) on the specified date have been deleted successfully.');

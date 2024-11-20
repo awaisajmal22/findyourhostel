@@ -15,6 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 bookingTile(
     {required BuildContext context,
     required BookingModel model,
+    bool isRecruiter = false,
     required VoidCallback onTap,
     double titleFont = 15,
     double? height,
@@ -33,7 +34,7 @@ bookingTile(
   ];
 
   return GestureDetector(
-    onTap: next,
+    onTap: isRecruiter ? () {} : next,
     child: Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
       width: width ?? context.getSize.width * 00.55,
@@ -67,24 +68,27 @@ bookingTile(
                   image: DecorationImage(
                       image: NetworkImage(hostel.images![0]), fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(20)),
-              child: GestureDetector(
-                onTap: onTap,
-                child: FittedBox(
-                  child: Container(
-                      padding: const EdgeInsets.all(5),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: AppColor.offWhite, shape: BoxShape.circle),
-                      child: Icon(
-                        hostel.favorite!
-                            ? Icons.favorite
-                            : Icons.favorite_outline,
-                        color: hostel.favorite!
-                            ? Colors.red.shade900
-                            : AppColor.darkblue,
-                      )),
-                ),
-              ),
+              child: isRecruiter
+                  ? const SizedBox.shrink()
+                  : GestureDetector(
+                      onTap: onTap,
+                      child: FittedBox(
+                        child: Container(
+                            padding: const EdgeInsets.all(5),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: AppColor.offWhite,
+                                shape: BoxShape.circle),
+                            child: Icon(
+                              hostel.favorite!
+                                  ? Icons.favorite
+                                  : Icons.favorite_outline,
+                              color: hostel.favorite!
+                                  ? Colors.red.shade900
+                                  : AppColor.darkblue,
+                            )),
+                      ),
+                    ),
             ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -133,19 +137,15 @@ bookingTile(
                   ],
                 ),
                 context.heightBox(0.005),
-                appText(
-                    context: context,
-                    title: '${hostel.price} PKR',
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold),
-                context.heightBox(0.01),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     GestureDetector(
                       onTap: () async {
-                        final Uri phoneUri =
-                            Uri(scheme: 'tel', path: hostel.phone!);
+                        final Uri phoneUri = Uri(
+                            scheme: 'tel',
+                            path: isRecruiter ? model.phone : hostel.phone!);
                         if (!await launchUrl(phoneUri)) {
                           throw Exception('Could not launch ${hostel.phone!}');
                         }
@@ -164,8 +164,9 @@ bookingTile(
                     context.widthBox(0.01),
                     GestureDetector(
                       onTap: () async {
-                        final Uri phoneUri =
-                            Uri(scheme: 'sms', path: hostel.phone!);
+                        final Uri phoneUri = Uri(
+                            scheme: 'sms',
+                            path: isRecruiter ? model.phone : hostel.phone!);
                         if (!await launchUrl(phoneUri)) {
                           throw Exception('Could not launch ${hostel.phone!}');
                         }
@@ -184,8 +185,9 @@ bookingTile(
                     context.widthBox(0.01),
                     GestureDetector(
                       onTap: () async {
-                        final Uri phoneUri =
-                            Uri(scheme: 'mailto', path: hostel.email!);
+                        final Uri phoneUri = Uri(
+                            scheme: 'mailto',
+                            path: isRecruiter ? model.email : hostel.email!);
                         if (!await launchUrl(phoneUri)) {
                           throw Exception('Could not launch ${hostel.phone!}');
                         }
@@ -205,7 +207,7 @@ bookingTile(
                     GestureDetector(
                       onTap: () async {
                         final Uri whatsappUri = Uri.parse(
-                            'https://wa.me/${hostel.phone}?text=${Uri.encodeComponent('hi')}');
+                            'https://wa.me/${isRecruiter ? model.phone : hostel.phone}?text=${Uri.encodeComponent('hi')}');
                         if (!await launchUrl(whatsappUri)) {
                           throw Exception('Could not launch ${hostel.phone!}');
                         }
@@ -246,16 +248,25 @@ bookingTile(
                     context: context,
                     title: 'Check Out',
                     subtitle: model.check_out.toString()),
+                if (isRecruiter)
+                  richText(
+                      context: context,
+                      title: 'Booked By',
+                      subtitle: model.name.toString()),
+
                 context.heightBox(0.02),
-                if (DateTime(int.parse(checkin[2]), int.parse(checkin[1]),
-                        int.parse(checkin[0]))
-                    .isBefore(DateTime.now().add(const Duration(days: 7))))
-                  textButton(
-                      context: context, onTap: cancelBooking, title: 'Cancel'),
+                if (!isRecruiter)
+                  if (DateTime(int.parse(checkin[2]), int.parse(checkin[1]),
+                          int.parse(checkin[0]))
+                      .isBefore(DateTime.now().add(const Duration(days: 7))))
+                    textButton(
+                        context: context,
+                        onTap: cancelBooking,
+                        title: 'Cancel'),
                 context.heightBox(0.01),
               ],
             ),
-          )
+          ),
         ],
       ),
     ),
