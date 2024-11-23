@@ -59,6 +59,7 @@ dependencies:
   crypto: ^3.0.6
   
   mailer: ^6.2.0
+  flutter_svg: ^2.0.15
   
 
 

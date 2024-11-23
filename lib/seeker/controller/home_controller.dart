@@ -1,16 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:findyourhostel/constant/asset_paths.dart';
 import 'package:findyourhostel/main.dart';
 import 'package:findyourhostel/models/booking_model/booking_model.dart';
 import 'package:findyourhostel/models/hostel_add_model/hostel_add_model.dart';
 import 'package:findyourhostel/repositories/storage/storage_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SeekerHomeController extends GetxController {
   RxList<HostelAddModel> _hostelsList = <HostelAddModel>[].obs;
   List<HostelAddModel> get hostelsList => _hostelsList.value;
+
   RxBool _loading = false.obs;
   bool get loading => _loading.value;
+  Rx<BitmapDescriptor?> icon = Rx<BitmapDescriptor?>(null);
+ 
+  createCustomMarker()async{
+    final BitmapDescriptor customIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(48, 48)),
+   AssetPaths.marker
+    );
+    icon.value = customIcon;
+  }
   Future<void> getHostels() async {
     _loading.value = true;
     FirebaseFirestore _firebase = FirebaseFirestore.instance;
@@ -27,7 +39,11 @@ class SeekerHomeController extends GetxController {
               Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
 
               if (data != null) {
-                _hostelsList.add(HostelAddModel.fromJson(data));
+                final m =HostelAddModel.fromJson(data);
+                if(m.isActive == true){
+                _hostelsList.add(m);
+
+                }
               }
             });
 

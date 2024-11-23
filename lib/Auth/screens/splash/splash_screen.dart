@@ -12,9 +12,13 @@ final controller = Get.find<SplashController>();
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.offWhite,
-      body: Center(
-        child: Image.asset(AssetPaths.logo,)
-      ),
+      body: Obx(() 
+          => Opacity(
+            opacity: controller.animationValue.value, // Use the animated opacity
+            child: Center(
+          child: Image.asset(AssetPaths.logo,)
+        ),
+      ),)
     );
   }
 }

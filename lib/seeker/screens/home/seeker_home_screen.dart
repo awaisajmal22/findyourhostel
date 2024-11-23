@@ -1,6 +1,7 @@
 import 'package:findyourhostel/bindings/app_routes.dart';
 import 'package:findyourhostel/common/controller/profile_conroller.dart';
 import 'package:findyourhostel/constant/app_colors.dart';
+import 'package:findyourhostel/constant/asset_paths.dart';
 
 import 'package:findyourhostel/extensions/height_width_extension.dart';
 import 'package:findyourhostel/extensions/size_extension.dart';
@@ -16,6 +17,7 @@ import 'package:findyourhostel/utils/app_text.dart';
 import 'package:findyourhostel/utils/curom_app_bar.dart';
 import 'package:findyourhostel/utils/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -39,6 +41,21 @@ class SeekerHomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 20,
+                          ),
+                          child: GestureDetector(
+                              onTap: () {
+                                Get.toNamed(
+                                  AppRoutes.map,
+                                );
+                              },
+                              child: CircleAvatar(
+                                  backgroundColor: AppColor.offWhite,
+                                  radius: 20,
+                                  child: SvgPicture.asset(AssetPaths.map))),
+                        ),
                         Expanded(
                           child: textField(
                               readOnly: true,
@@ -62,9 +79,9 @@ class SeekerHomeScreen extends StatelessWidget {
                             onTap: () {
                               controller.clearFilter();
                             },
-                            child: Icon(
-                              Icons.cleaning_services_rounded,
-                              color: AppColor.black.withOpacity(0.5),
+                            child: SvgPicture.asset(
+                              height: 50,
+                              AssetPaths.clear,
                             ))
                       ],
                     )),
@@ -157,17 +174,21 @@ class SeekerHomeScreen extends StatelessWidget {
                               : 5, (index) {
                         HostelAddModel model = HostelAddModel.fromJson(
                             controller.bookedHostel[index].hostel_model!);
-
-                        return hostelTile(
-                            isPopular: true,
-                            next: () {
-                              Get.toNamed(AppRoutes.detail, arguments: model);
-                            },
-                            context: context,
-                            model: model,
-                            onTap: () {
-                              controller.toggleFavoriteStatus(model);
-                            });
+                        print("UOBS ${model.isActive}");
+                        if (model.isActive == false) {
+                          return const SizedBox.shrink();
+                        } else {
+                          return hostelTile(
+                              isPopular: true,
+                              next: () {
+                                Get.toNamed(AppRoutes.detail, arguments: model);
+                              },
+                              context: context,
+                              model: model,
+                              onTap: () {
+                                controller.toggleFavoriteStatus(model);
+                              });
+                        }
                       }),
                     ),
                   ),

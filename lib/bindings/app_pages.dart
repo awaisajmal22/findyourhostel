@@ -26,6 +26,7 @@ import 'package:findyourhostel/seeker/screens/dashboard/seeker_dashboard_screen.
 import 'package:findyourhostel/seeker/screens/detail/detail_screen.dart';
 import 'package:findyourhostel/seeker/screens/home/seeker_home_screen.dart';
 import 'package:findyourhostel/Auth/screens/splash/splash_screen.dart';
+import 'package:findyourhostel/seeker/screens/map/map_screen.dart';
 import 'package:findyourhostel/seeker/screens/search/seeker_search_screen.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
@@ -87,6 +88,13 @@ class AppPages {
       page: () =>  BookScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut(()=> BookingController());
+      }),
+    ),
+    GetPage(
+      name: AppRoutes.map,
+      page: () =>  MapScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(()=> SeekerHomeController());
       }),
     ),
     

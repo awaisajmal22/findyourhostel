@@ -20,6 +20,8 @@ part 'hostel_add_model.g.dart';
     @Default('') String? email,
     @Default('') String? phone,
     @Default(-1) int? gender,
+    @Default(false) bool? isActive,
+    @Default(false) bool? inActive,
     @Default(false) bool? favorite,
 
     @Default('') String? createdDate,

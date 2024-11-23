@@ -9,6 +9,7 @@ class AppRoutes{
   static const home = '/home';
   static const search ='/search';
   static const booking ='/booking';
+  static const map ='/map';
  
 
 

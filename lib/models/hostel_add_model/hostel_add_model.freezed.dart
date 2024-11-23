@@ -36,6 +36,8 @@ mixin _$HostelAddModel {
   String? get email => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
   int? get gender => throw _privateConstructorUsedError;
+  bool? get isActive => throw _privateConstructorUsedError;
+  bool? get inActive => throw _privateConstructorUsedError;
   bool? get favorite => throw _privateConstructorUsedError;
   String? get createdDate => throw _privateConstructorUsedError;
   String? get docId => throw _privateConstructorUsedError;
@@ -72,6 +74,8 @@ abstract class $HostelAddModelCopyWith<$Res> {
       String? email,
       String? phone,
       int? gender,
+      bool? isActive,
+      bool? inActive,
       bool? favorite,
       String? createdDate,
       String? docId,
@@ -109,6 +113,8 @@ class _$HostelAddModelCopyWithImpl<$Res, $Val extends HostelAddModel>
     Object? email = freezed,
     Object? phone = freezed,
     Object? gender = freezed,
+    Object? isActive = freezed,
+    Object? inActive = freezed,
     Object? favorite = freezed,
     Object? createdDate = freezed,
     Object? docId = freezed,
@@ -178,6 +184,14 @@ class _$HostelAddModelCopyWithImpl<$Res, $Val extends HostelAddModel>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as int?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      inActive: freezed == inActive
+          ? _value.inActive
+          : inActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
       favorite: freezed == favorite
           ? _value.favorite
           : favorite // ignore: cast_nullable_to_non_nullable
@@ -234,6 +248,8 @@ abstract class _$$HostelAddModelImplCopyWith<$Res>
       String? email,
       String? phone,
       int? gender,
+      bool? isActive,
+      bool? inActive,
       bool? favorite,
       String? createdDate,
       String? docId,
@@ -269,6 +285,8 @@ class __$$HostelAddModelImplCopyWithImpl<$Res>
     Object? email = freezed,
     Object? phone = freezed,
     Object? gender = freezed,
+    Object? isActive = freezed,
+    Object? inActive = freezed,
     Object? favorite = freezed,
     Object? createdDate = freezed,
     Object? docId = freezed,
@@ -338,6 +356,14 @@ class __$$HostelAddModelImplCopyWithImpl<$Res>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as int?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      inActive: freezed == inActive
+          ? _value.inActive
+          : inActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
       favorite: freezed == favorite
           ? _value.favorite
           : favorite // ignore: cast_nullable_to_non_nullable
@@ -389,6 +415,8 @@ class _$HostelAddModelImpl implements _HostelAddModel {
       this.email = '',
       this.phone = '',
       this.gender = -1,
+      this.isActive = false,
+      this.inActive = false,
       this.favorite = false,
       this.createdDate = '',
       this.docId = '',
@@ -475,6 +503,12 @@ class _$HostelAddModelImpl implements _HostelAddModel {
   final int? gender;
   @override
   @JsonKey()
+  final bool? isActive;
+  @override
+  @JsonKey()
+  final bool? inActive;
+  @override
+  @JsonKey()
   final bool? favorite;
   @override
   @JsonKey()
@@ -504,7 +538,7 @@ class _$HostelAddModelImpl implements _HostelAddModel {
 
   @override
   String toString() {
-    return 'HostelAddModel(images: $images, uuid: $uuid, name: $name, location: $location, address: $address, description: $description, price: $price, avalaibleRoom: $avalaibleRoom, avalaibleBed: $avalaibleBed, roomType: $roomType, amenities: $amenities, policies: $policies, email: $email, phone: $phone, gender: $gender, favorite: $favorite, createdDate: $createdDate, docId: $docId, qrCode: $qrCode, long: $long, lat: $lat, review: $review)';
+    return 'HostelAddModel(images: $images, uuid: $uuid, name: $name, location: $location, address: $address, description: $description, price: $price, avalaibleRoom: $avalaibleRoom, avalaibleBed: $avalaibleBed, roomType: $roomType, amenities: $amenities, policies: $policies, email: $email, phone: $phone, gender: $gender, isActive: $isActive, inActive: $inActive, favorite: $favorite, createdDate: $createdDate, docId: $docId, qrCode: $qrCode, long: $long, lat: $lat, review: $review)';
   }
 
   @override
@@ -533,6 +567,10 @@ class _$HostelAddModelImpl implements _HostelAddModel {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            (identical(other.inActive, inActive) ||
+                other.inActive == inActive) &&
             (identical(other.favorite, favorite) ||
                 other.favorite == favorite) &&
             (identical(other.createdDate, createdDate) ||
@@ -563,6 +601,8 @@ class _$HostelAddModelImpl implements _HostelAddModel {
         email,
         phone,
         gender,
+        isActive,
+        inActive,
         favorite,
         createdDate,
         docId,
@@ -604,6 +644,8 @@ abstract class _HostelAddModel implements HostelAddModel {
       final String? email,
       final String? phone,
       final int? gender,
+      final bool? isActive,
+      final bool? inActive,
       final bool? favorite,
       final String? createdDate,
       final String? docId,
@@ -645,6 +687,10 @@ abstract class _HostelAddModel implements HostelAddModel {
   String? get phone;
   @override
   int? get gender;
+  @override
+  bool? get isActive;
+  @override
+  bool? get inActive;
   @override
   bool? get favorite;
   @override
