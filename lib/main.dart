@@ -20,6 +20,7 @@ void main() async {
   serviceLocator();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  
   runApp(const MyApp());
 }
 

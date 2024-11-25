@@ -258,7 +258,7 @@ bookingTile(
                 if (!isRecruiter)
                   if (DateTime(int.parse(checkin[2]), int.parse(checkin[1]),
                           int.parse(checkin[0]))
-                      .isBefore(DateTime.now().add(const Duration(days: 7))))
+                      .isAfter(DateTime.now()))
                     textButton(
                         context: context,
                         onTap: cancelBooking,

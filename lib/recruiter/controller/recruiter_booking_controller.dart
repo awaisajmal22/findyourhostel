@@ -14,7 +14,6 @@ import 'package:flutter/widgets.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:jazzcash_flutter/jazzcash_flutter.dart';
 import 'package:mailer/mailer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
