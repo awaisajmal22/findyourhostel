@@ -1,3 +1,4 @@
+import 'package:findyourhostel/extensions/validation_extension.dart';
 import 'package:findyourhostel/main.dart';
 import 'package:findyourhostel/models/hostel_add_model/hostel_add_model.dart';
 import 'package:findyourhostel/repositories/addhostel/add_hostel_repo.dart';
@@ -142,7 +143,10 @@ class AddHostelController extends GetxController {
       toast(msg: 'Please enter your hostel policies.', context: context);
     } else if (email.text.isEmpty) {
       toast(msg: 'Please enter your hostel email.', context: context);
-    } else if (phone.text.isEmpty) {
+    } else if(!email.text.emailValidator()){
+      toast(msg: 'Please enter valid email.', context: context);
+    }
+    else if (phone.text.isEmpty) {
       toast(msg: 'Please enter your hostel phone number.', context: context);
     } else if (_qrCode == '') {
       toast(msg: 'Please enter your Payment QR CODE.', context: context);
