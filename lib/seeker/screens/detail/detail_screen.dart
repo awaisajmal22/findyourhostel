@@ -106,26 +106,31 @@ class DetailScreen extends StatelessWidget {
                   Positioned(
                     left: 20,
                     bottom: 10,
-                    child: GestureDetector(
-                      onTap: () {
-                        reviewBottomSheet(
-                          model: model,
-                          context: context,
-                          controller: controller,
-                        );
-                      },
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(
-                            color: AppColor.black.withOpacity(0.4)),
-                        child: appText(
-                            context: context,
-                            title: 'Review',
-                            fontSize: 12,
-                            textColor: AppColor.offWhite),
-                      ),
-                    ),
+                    child: controller.checkBooking(
+                   currentId: controller.currentUserId,
+                                hostelId: model.docId??'') ==
+                            false
+                        ?const SizedBox.shrink()
+                        : GestureDetector(
+                            onTap: () {
+                              reviewBottomSheet(
+                                model: model,
+                                context: context,
+                                controller: controller,
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              decoration: BoxDecoration(
+                                  color: AppColor.black.withOpacity(0.4)),
+                              child: appText(
+                                  context: context,
+                                  title: 'Review',
+                                  fontSize: 12,
+                                  textColor: AppColor.offWhite),
+                            ),
+                          ),
                   )
                 ],
               ),
@@ -269,7 +274,6 @@ class DetailScreen extends StatelessWidget {
                         fontSize: 14,
                         context: context,
                         title: model.gender == 0 ? 'Male' : 'Female'),
-
                     context.heightBox(0.02),
                     appText(
                       context: context,

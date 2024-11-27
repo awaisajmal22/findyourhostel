@@ -102,8 +102,11 @@ getGender() async {
   @override
   void onInit() {
     _storageRepo = getIt();
-    getBookings();
+    getBookings().whenComplete((){
+    getCurrentUserId();
+    });
     getGender();
+
     getUserDataFromFirestore();
     // TODO: implement onInit
     super.onInit();
@@ -257,6 +260,22 @@ getGender() async {
       print("Error fetching hostel reviews: $e");
       return [];
     }
+  }
+  bool checkBooking({required String hostelId,required String currentId}) {
+  for (var v in _bookedHostel) {
+    final m = HostelAddModel.fromJson(v.hostel_model!);
+    print('Booker Id ${v.bookerId} == $currentUserId');
+    if (m.docId == hostelId&& v.bookerId == currentId) {
+      return true; 
+    }
+  }
+  return false; 
+}
+
+  RxString _currentUserId = ''.obs;
+  String get currentUserId => _currentUserId.value;
+  getCurrentUserId()async{
+    _currentUserId.value = await _storageRepo.getUid();
   }
 }
 
