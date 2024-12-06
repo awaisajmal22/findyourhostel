@@ -55,11 +55,12 @@ dependencies:
   google_maps_flutter: ^2.0.6
   geocoding: ^2.1.0
   maps_launcher: ^2.2.1
-  jazzcash_flutter: ^1.0.5
+  # jazzcash_flutter: ^1.0.5
   crypto: ^3.0.6
   
   mailer: ^6.2.0
   flutter_svg: ^2.0.15
+  paymob_payment: ^0.0.1+1
  
   
   

@@ -16,6 +16,7 @@ import 'package:findyourhostel/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:paymob_payment/paymob_payment.dart';
 
 class BookScreen extends StatelessWidget {
   BookScreen({super.key});
@@ -148,7 +149,6 @@ class BookScreen extends StatelessWidget {
                 textButton(
                     context: context,
                     onTap: () {
-                      
                       List<String> checkOut =
                           controller.checkOut.text.split('-');
                       List<String> checkInt =
@@ -188,10 +188,22 @@ class BookScreen extends StatelessWidget {
                       } else if (controller.selectedRoomType == -1) {
                         toast(msg: 'Please select room type', context: context);
                       } else {
-                        JazzCashClass().openJazzCashPayment('5000', 'Ok');
-                        controller.bookingHostel(
-                            model: model, context: context);
-                        controller.sendEmail(model.email!, model.name!);
+                        List<RoomType> roomType = model.roomType!
+                            .map((e) => RoomType.fromJson(e))
+                            .toList();
+                        print(roomType.length);
+                        // JazzCashClass().openJazzCashPayment('5000', 'Ok');
+                        PaymobPayment.instance.pay(
+                            context: context,
+                            currency: "AED",
+                            amountInCents:
+                                (int.parse("10000") * 100).toString(),
+                            onPayment: (response) {
+                              controller.bookingHostel(
+                                  model: model, context: context);
+                              controller.sendEmail(model.email!, model.name!);
+                              print('PayMob Response ${response}');
+                            });
                       }
                     },
                     title: 'Continue with payment')

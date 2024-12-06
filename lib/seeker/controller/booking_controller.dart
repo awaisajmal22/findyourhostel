@@ -6,6 +6,7 @@ import 'package:findyourhostel/main.dart';
 import 'package:findyourhostel/models/booking_model/booking_model.dart';
 import 'package:findyourhostel/models/hostel_add_model/hostel_add_model.dart';
 import 'package:findyourhostel/repositories/storage/storage_repo.dart';
+import 'package:findyourhostel/utils/app_text.dart';
 import 'package:findyourhostel/utils/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:jazzcash_flutter/jazzcash_flutter.dart';
+// import 'package:jazzcash_flutter/jazzcash_flutter.dart';
 import 'package:mailer/mailer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -118,9 +119,35 @@ class BookingController extends GetxController {
           check_out: checkOut.text,
         ).toJson())
         .whenComplete(() {
-      toast(msg: 'Hostel Book Successfully.', context: context);
+      // toast(msg: 'Hostel Book Successfully.', context: context);
       _loading.value = false;
       Get.back();
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: appText(
+                    textAlign: TextAlign.center,
+                    context: context,
+                    fontSize: 12,
+                    title:
+                        'Payment received successfully. Your booking has been confirmed..',
+                    maxLine: 2),
+              ),
+            );
+          });
+      Future.delayed(const Duration(seconds: 2), () {
+        Get.back();
+      });
     });
   }
 
@@ -192,21 +219,19 @@ class BookingController extends GetxController {
       ..from = Address('fyourhostel@gmail.com')
       ..recipients.add(
         email.text,
-    
       )
       ..subject =
           'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
-      ..text = 
+      ..text =
           "Dear ${name.text} You Booked $hostelNme\nBooking Detail\nName: ${name.text}\nAge: ${age.text}\nPhone Number : ${phone.text}\nEmail: ${email.text}\nCNIC: ${cnic.text}\nCheck In: ${checkIn.text} |  Check Out: ${checkOut.text}\nRoom Type: ${roomTypes[_selectedRoomType.value]}";
     final message2 = Message()
       ..from = Address('fyourhostel@gmail.com')
       ..recipients.add(
-       hostlerEmail,
-    
+        hostlerEmail,
       )
       ..subject =
           'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
-      ..text = 
+      ..text =
           "Dear Recruiter ${name.text}  Booked Your Hostel: $hostelNme\nBooking Detail\nName: ${name.text}\nAge: ${age.text}\nPhone Number : ${phone.text}\nEmail: ${email.text}\nCNIC: ${cnic.text}\nCheck In: ${checkIn.text} |  Check Out: ${checkOut.text}\nRoom Type: ${roomTypes[_selectedRoomType.value]}";
 
     try {
@@ -223,7 +248,8 @@ class BookingController extends GetxController {
     }
   }
 
-  Future<void> deleteBooking(String targetDate,String hostelerId,String hostelName,String userName) async {
+  Future<void> deleteBooking(String targetDate, String hostelerId,
+      String hostelName, String userName) async {
     try {
       // Format the date as per your Firestore structure (assuming `date` is stored as a Timestamp)
       // Timestamp targetTimestamp = Timestamp.fromDate(DateTime.parse(targetDate));
@@ -236,21 +262,19 @@ class BookingController extends GetxController {
 
       // Loop through each matching document and delete it
       for (QueryDocumentSnapshot doc in querySnapshot.docs) {
-        await doc.reference.delete().whenComplete(()async{
-              final smtpServer = gmail('fyourhostel@gmail.com', 'ggsazjhrnosasczy');
+        await doc.reference.delete().whenComplete(() async {
+          final smtpServer = gmail('fyourhostel@gmail.com', 'ggsazjhrnosasczy');
           final message2 = Message()
-      ..from = Address('fyourhostel@gmail.com')
-      ..recipients.add(
-       hostelerId,
-    
-      )
-      ..subject =
-          'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
-      ..text = 
-          "Dear Recruiter ${userName}  Cancel Your Hostel: $hostelName Booking";
-      final sendReport2 = await send(message2, smtpServer);
+            ..from = Address('fyourhostel@gmail.com')
+            ..recipients.add(
+              hostelerId,
+            )
+            ..subject =
+                'Find Your Hostel Booking :: 😀 :: ${DateTime.now()}' //subject of the email
+            ..text =
+                "Dear Recruiter ${userName}  Cancel Your Hostel: $hostelName Booking";
+          final sendReport2 = await send(message2, smtpServer);
         });
-        
       }
 
       print('Booking(s) on the specified date have been deleted successfully.');

@@ -1,6 +1,7 @@
 import 'package:findyourhostel/bindings/app_pages.dart';
 import 'package:findyourhostel/bindings/app_routes.dart';
 import 'package:findyourhostel/constant/app_colors.dart';
+import 'package:findyourhostel/constant/constant.dart';
 import 'package:findyourhostel/repositories/addhostel/add_hostel_repo.dart';
 import 'package:findyourhostel/repositories/addhostel/firebase_add_hostel_repo.dart';
 import 'package:findyourhostel/repositories/login/firebase_login_repo.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:paymob_payment/paymob_payment.dart';
 
 GetIt getIt = GetIt.instance;
 void main() async {
@@ -24,9 +26,25 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    // _saveDeviceToken();
+   PaymobPayment.instance.initialize(
+    apiKey: Constant.payMobApiKey,
+    integrationID: 46394,
+    iFrameID: 26540,
+  );
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
